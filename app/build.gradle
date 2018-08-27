@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.buildTools
     defaultConfig {
         applicationId "modern.android.app"
-        minSdkVersion 16
-        targetSdkVersion 28
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,14 +20,48 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility versions.sourceCompat
+        targetCompatibility versions.targetCompat
+    }
+    dataBinding {
+        enabled = true
+    }
+
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation 'com.android.support:appcompat-v7:28.0.0-rc01'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation deps.support.appCompat
+    implementation deps.support.recyclerView
+    implementation deps.support.cardView
+    implementation deps.support.support
+    implementation deps.support.designSupport
+    implementation deps.support.constraintLayout
+    implementation deps.android.lifecycleExt
+    implementation deps.android.lifecycleCommon
+    //implementation deps.android.roomRuntime
+    //implementation deps.android.roomRx
+
+    implementation deps.kotlin.stdlib
+
+    implementation deps.reactivex.rxJava
+    implementation deps.reactivex.rxAndroid
+
+    //implementation deps.google.dagger
+    //kapt deps.google.daggerProcessor
+    //implementation deps.google.gson
+
+    //implementation deps.square.picasso
+    //implementation deps.square.okhttpDownloader
+
+    //implementation deps.square.retrofit
+    //implementation deps.square.okhttp
+    //implementation deps.square.gsonConverter
+    //implementation deps.square.retrofitRxAdapter
+
+    //implementation deps.additional.jodaTime
+
+    //implementation deps.facebook.stetho
+    //implementation deps.facebook.networkInterceptor
 }
