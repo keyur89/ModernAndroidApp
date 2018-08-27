@@ -12,7 +12,7 @@ import modern.android.app.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    var mainViewModel = MainViewModel()
+    var mainViewModel = MainViewModel(application = BaseApplication())
     private val repositoryRecyclerViewAdapter = RepositoryRecyclerViewAdapter(arrayListOf(), this)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,8 +20,11 @@ class MainActivity : AppCompatActivity(), RepositoryRecyclerViewAdapter.OnItemCl
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
+
         binding.viewModel = mainViewModel
         binding.executePendingBindings()
+
+        mainViewModel.loadRepositories()
 
         binding.repositoryRv.layoutManager = LinearLayoutManager(this)
         binding.repositoryRv.adapter = repositoryRecyclerViewAdapter
